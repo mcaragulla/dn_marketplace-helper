@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>Mock Marketplace</title>
+<style>body{font-family:sans-serif} label{display:block;margin:8px 0;border:1px solid #ccc;padding:6px}
+[role=listbox]{border:1px solid #888;padding:4px} [role=option]{padding:4px;cursor:pointer}</style></head>
+<body>
+<!-- Simulación aproximada del formulario de Facebook Marketplace (estructura de etiquetas y combobox). -->
+<div role="main">
+  <input type="file" accept="image/*,image/heif,image/heic" multiple id="photos" style="display:none">
+  <div id="photoCount">0</div>
+  <label><div><span>Título</span><input type="text" id="title"></div></label>
+  <label><div><span>Precio</span><input type="text" id="price"></div></label>
+  <label id="catLabel"><div role="combobox" tabindex="0" aria-expanded="false"><span>Categoría</span><span id="catValue"></span></div></label>
+  <label id="condLabel"><div role="combobox" tabindex="0" aria-expanded="false"><span>Estado</span><span id="condValue"></span></div></label>
+  <div role="button" aria-expanded="false" id="more"><span>Más detalles</span></div>
+  <div id="moreBox" hidden>
+    <label><div><span>Descripción</span><textarea id="desc"></textarea></div></label>
+  </div>
+  <label><div><span>Ubicación</span><input type="text" id="loc" role="combobox"></div></label>
+  <div role="button" aria-label="Publicar" id="publish"><span>Publicar</span></div>
+  <div id="published">no</div>
+</div>
+<div id="layer"></div>
+<script>
+  // Simula que React solo acepta cambios disparados por eventos.
+  const state = {};
+  ['title','price','desc','loc'].forEach(id => document.getElementById(id).addEventListener('input', e => { state[id] = e.target.value; }));
+  document.getElementById('photos').addEventListener('change', e => { document.getElementById('photoCount').textContent = e.target.files.length + ':' + [...e.target.files].map(f=>f.name+'/'+f.type+'/'+f.size).join(','); });
+  function openList(opts, onPick) {
+    const layer = document.getElementById('layer');
+    layer.innerHTML = '';
+    const lb = document.createElement('div'); lb.setAttribute('role','listbox');
+    opts.forEach(o => { const d = document.createElement('div'); d.setAttribute('role','option'); d.innerHTML = '<span>'+o+'</span>'; d.onclick = () => { onPick(o); layer.innerHTML=''; }; lb.appendChild(d); });
+    setTimeout(() => layer.appendChild(lb), 200);
+  }
+  document.querySelector('#catLabel [role=combobox]').onclick = () => openList(['Herramientas','Hogar','Jardín','Varios'], v => { document.getElementById('catValue').textContent = v; state.cat = v; });
+  document.querySelector('#condLabel [role=combobox]').onclick = () => openList(['Nuevo','Usado: como nuevo','Usado: buen estado','Usado: aceptable'], v => { document.getElementById('condValue').textContent = v; state.cond = v; });
+  document.getElementById('more').onclick = (e) => { document.getElementById('moreBox').hidden = false; e.currentTarget.setAttribute('aria-expanded','true'); };
+  document.getElementById('loc').addEventListener('input', e => openList(['Quito, Ecuador','Quito Norte, Ecuador'], v => { e.target.value = v; state.locPicked = v; }));
+  document.getElementById('publish').onclick = () => { document.getElementById('published').textContent = 'yes'; };
+  window.__state = state;
+</script>
+</body></html>

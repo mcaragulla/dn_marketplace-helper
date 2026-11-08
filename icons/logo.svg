@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#06B6D4"/>
+    </linearGradient>
+  </defs>
+  <!-- Fondo -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#bg)"/>
+  <!-- Etiqueta trasera (copia) -->
+  <g transform="translate(46 22) rotate(18)">
+    <path d="M10 0 H52 a8 8 0 0 1 8 8 V62 a8 8 0 0 1 -8 8 H10 a8 8 0 0 1 -8 -8 V20 Z" fill="#FFFFFF" opacity="0.45"/>
+  </g>
+  <!-- Etiqueta principal -->
+  <g transform="translate(26 30)">
+    <path d="M12 0 H56 a9 9 0 0 1 9 9 V64 a9 9 0 0 1 -9 9 H12 a9 9 0 0 1 -9 -9 V22 Z" fill="#FFFFFF"/>
+    <circle cx="16" cy="18" r="5.5" fill="#4F46E5"/>
+    <rect x="16" y="36" width="36" height="6" rx="3" fill="#4F46E5"/>
+    <rect x="16" y="49" width="24" height="6" rx="3" fill="#06B6D4"/>
+  </g>
+  <!-- Rayo: un clic -->
+  <circle cx="94" cy="94" r="22" fill="#F59E0B" stroke="#FFFFFF" stroke-width="5"/>
+  <path d="M97 80 L86 97 H94 L91 108 L102 91 H94 Z" fill="#FFFFFF"/>
+</svg>

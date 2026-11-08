@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DN Marketplace Helper</title>
+  <link rel="icon" href="../../icons/icon32.png">
+  <link rel="stylesheet" href="../lib/ui.css">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <aside>
+    <div class="brand"><img src="../../icons/icon48.png" alt=""><b data-i18n="extName"></b></div>
+    <nav>
+      <button data-view="templates" data-i18n="navTemplates"></button>
+      <button data-view="calendar" data-i18n="navCalendar"></button>
+      <button data-view="history" data-i18n="navHistory"></button>
+      <button data-view="settings" data-i18n="navSettings"></button>
+    </nav>
+    <div class="muted aside-foot">
+      <div>DigitalNeg · <a href="mailto:info@digital-neg.com">info@digital-neg.com</a></div>
+      <div><a href="https://github.com/mcaragulla/dn_marketplace-helper" target="_blank" rel="noopener">GitHub</a> · <span id="version"></span></div>
+    </div>
+  </aside>
+
+  <main>
+    <!-- ============ PLANTILLAS ============ -->
+    <section id="view-templates" class="view">
+      <div class="row head">
+        <h1 data-i18n="navTemplates"></h1>
+        <span class="spacer"></span>
+        <select id="clientFilter" class="w-auto"></select>
+        <button id="newTpl" class="primary" data-i18n="newTemplate"></button>
+      </div>
+      <p class="muted" data-i18n="templatesHelp"></p>
+      <div id="tplList" class="grid"></div>
+      <div id="tplEmpty" class="card empty hidden" data-i18n="noTemplatesLong"></div>
+    </section>
+
+    <!-- ============ EDITOR ============ -->
+    <section id="view-editor" class="view">
+      <div class="row head">
+        <button id="backBtn" class="small">← <span data-i18n="back"></span></button>
+        <h1 id="editorTitle" data-i18n="editTemplate"></h1>
+        <span class="spacer"></span>
+        <span id="savedHint" class="badge ok hidden" data-i18n="saved"></span>
+        <button id="saveTpl" class="primary" data-i18n="save"></button>
+      </div>
+
+      <div class="editor">
+        <div class="stack">
+          <div class="card stack">
+            <h2 data-i18n="secGeneral"></h2>
+            <div class="cols">
+              <label class="field"><span data-i18n="tplName"></span><input type="text" id="e_name" maxlength="80"></label>
+              <label class="field"><span data-i18n="client"></span><input type="text" id="e_client" list="clientsList" maxlength="60"></label>
+            </div>
+            <div class="cols">
+              <label class="field"><span data-i18n="price"></span><input type="text" id="e_price" inputmode="decimal" maxlength="20"></label>
+              <label class="field"><span data-i18n="photosPerPost"></span><input type="number" id="e_per" min="1" max="10"></label>
+            </div>
+            <div class="cols">
+              <label class="field"><span data-i18n="category"></span><input type="text" id="e_category" list="categoriesList" maxlength="80"></label>
+              <label class="field"><span data-i18n="condition"></span><input type="text" id="e_condition" list="conditionsList" maxlength="60"></label>
+            </div>
+            <label class="field"><span data-i18n="location"></span><input type="text" id="e_location" maxlength="80"></label>
+            <p class="muted" data-i18n="exactTextHelp"></p>
+          </div>
+
+          <div class="card stack">
+            <h2 data-i18n="secTitles"></h2>
+            <p class="muted" data-i18n="titlesHelp"></p>
+            <textarea id="e_titles" rows="6"></textarea>
+            <h2 data-i18n="secDescriptions"></h2>
+            <p class="muted" data-i18n="descriptionsHelp"></p>
+            <textarea id="e_descriptions" rows="8"></textarea>
+            <h2 data-i18n="secVariables"></h2>
+            <p class="muted" data-i18n="variablesHelp"></p>
+            <textarea id="e_variables" rows="4" placeholder="beneficio = Envío gratis | Garantía de 1 año&#10;sector = Norte | Sur | Centro"></textarea>
+          </div>
+
+          <div class="card stack">
+            <div class="row">
+              <h2 data-i18n="secImages"></h2>
+              <span class="spacer"></span>
+              <label class="btn small"><span data-i18n="addImages"></span><input type="file" id="e_files" accept="image/jpeg,image/png,image/webp" multiple hidden></label>
+            </div>
+            <p class="muted" data-i18n="imagesHelp"></p>
+            <div id="e_images" class="thumbs"></div>
+          </div>
+        </div>
+
+        <div class="stack side">
+          <div class="card stack">
+            <h2 data-i18n="secSummary"></h2>
+            <div id="sumBox"></div>
+          </div>
+          <div class="card stack">
+            <h2 data-i18n="secNextTitles"></h2>
+            <ol id="nextTitles" class="next"></ol>
+          </div>
+          <div class="card stack">
+            <button id="dupTpl" data-i18n="duplicate"></button>
+            <button id="delTpl" class="danger" data-i18n="delete"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CALENDARIO ============ -->
+    <section id="view-calendar" class="view">
+      <h1 data-i18n="navCalendar"></h1>
+      <div class="card stack">
+        <h2 data-i18n="secReminder"></h2>
+        <label class="row"><input type="checkbox" id="remEnabled"> <span data-i18n="reminderEnabled"></span></label>
+        <div>
+          <div class="muted" data-i18n="publishDays"></div>
+          <div id="daysBox" class="row days"></div>
+        </div>
+        <label class="field w-180"><span data-i18n="reminderTime"></span><input type="time" id="remTime"></label>
+        <p class="muted" data-i18n="reminderHelp"></p>
+      </div>
+      <div class="card stack">
+        <h2 data-i18n="secUpcoming"></h2>
+        <p class="muted" data-i18n="upcomingHelp"></p>
+        <div id="upcoming" class="upcoming"></div>
+      </div>
+    </section>
+
+    <!-- ============ HISTORIAL ============ -->
+    <section id="view-history" class="view">
+      <div class="row head">
+        <h1 data-i18n="navHistory"></h1>
+        <span class="spacer"></span>
+        <button id="clearHistory" class="danger" data-i18n="clearHistory"></button>
+      </div>
+      <p class="muted" data-i18n="historyHelp"></p>
+      <div class="card table-wrap">
+        <table>
+          <thead><tr>
+            <th data-i18n="colDate"></th><th data-i18n="client"></th><th data-i18n="template"></th>
+            <th data-i18n="colTitle"></th><th data-i18n="colPhotos"></th><th data-i18n="colStatus"></th><th></th>
+          </tr></thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+        <div id="historyEmpty" class="empty hidden" data-i18n="noHistory"></div>
+      </div>
+    </section>
+
+    <!-- ============ AJUSTES ============ -->
+    <section id="view-settings" class="view">
+      <h1 data-i18n="navSettings"></h1>
+      <div class="card stack">
+        <h2 data-i18n="secLanguage"></h2>
+        <select id="langSel" class="w-180">
+          <option value="auto" data-i18n="langAuto"></option>
+          <option value="es">Español</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="card stack">
+        <h2 data-i18n="secBackup"></h2>
+        <p class="muted" data-i18n="backupHelp"></p>
+        <div class="row">
+          <button id="exportBtn" class="primary" data-i18n="export"></button>
+          <label class="btn"><span data-i18n="import"></span><input type="file" id="importFile" accept="application/json,.json" hidden></label>
+        </div>
+        <div id="usage" class="muted"></div>
+      </div>
+      <div class="card stack">
+        <h2 data-i18n="secAbout"></h2>
+        <p data-i18n="aboutText"></p>
+        <p class="muted" data-i18n="disclaimer"></p>
+        <p class="muted" data-i18n="privacyShort"></p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <datalist id="clientsList"></datalist>
+  <datalist id="categoriesList"></datalist>
+  <datalist id="conditionsList"></datalist>
+
+  <script type="module" src="options.js"></script>
+</body>
+</html>

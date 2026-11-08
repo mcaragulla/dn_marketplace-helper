@@ -1,0 +1,408 @@
+{
+  "extName": {
+    "message": "DN Marketplace Helper",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Rellena tus anuncios de Facebook Marketplace con un clic usando plantillas, sin repetir títulos ni fotos. Tú presionas Publicar."
+  },
+  "notifyPublish": {
+    "message": "Hoy toca publicar en Marketplace. Abre la extensión y rellena tu anuncio."
+  },
+  "notifyRenew": {
+    "message": "Hoy toca renovar tus publicaciones de Marketplace."
+  },
+  "openPanel": {
+    "message": "Abrir panel"
+  },
+  "today": {
+    "message": "Hoy"
+  },
+  "status_publish": {
+    "message": "Publicar"
+  },
+  "status_renew": {
+    "message": "Solo renovar"
+  },
+  "status_skip": {
+    "message": "Saltado"
+  },
+  "status_off": {
+    "message": "Día libre"
+  },
+  "todayPublishText": {
+    "message": "Abre Crear publicación, elige una plantilla y presiona Rellenar."
+  },
+  "todayRenewText": {
+    "message": "Hoy no publicas: renueva tus anuncios desde Tus publicaciones."
+  },
+  "todaySkipText": {
+    "message": "Hoy no toca publicar."
+  },
+  "todayOffText": {
+    "message": "Hoy no es día de publicación."
+  },
+  "nextPublish": {
+    "message": "Próxima: {0}."
+  },
+  "openSelling": {
+    "message": "Abrir Tus publicaciones"
+  },
+  "skipToday": {
+    "message": "Saltar hoy"
+  },
+  "renewToday": {
+    "message": "Solo renovar hoy"
+  },
+  "resetToday": {
+    "message": "Restablecer"
+  },
+  "notOnCreate": {
+    "message": "Abre la página Crear publicación → Artículo en venta de Marketplace para poder rellenar."
+  },
+  "openCreate": {
+    "message": "Abrir Crear publicación"
+  },
+  "pendingTitle": {
+    "message": "Rellenado, falta publicar:"
+  },
+  "markPublished": {
+    "message": "Marcar como publicado"
+  },
+  "cancel": {
+    "message": "Cancelar"
+  },
+  "template": {
+    "message": "Plantilla"
+  },
+  "noTemplates": {
+    "message": "Aún no tienes plantillas. Crea una en el panel o usa “Guardar formulario como plantilla”."
+  },
+  "fill": {
+    "message": "Rellenar"
+  },
+  "capture": {
+    "message": "Guardar formulario como plantilla"
+  },
+  "noClient": {
+    "message": "Sin cliente"
+  },
+  "untitled": {
+    "message": "Sin nombre"
+  },
+  "price": {
+    "message": "Precio"
+  },
+  "statsLine": {
+    "message": "Títulos {0}/{1} · Fotos {2}/{3}"
+  },
+  "noTitles": {
+    "message": "No quedan títulos sin usar. Agrega títulos o variables nuevas en la plantilla."
+  },
+  "noImages": {
+    "message": "No quedan fotos sin usar. Agrega fotos nuevas a la plantilla."
+  },
+  "lowStock": {
+    "message": "Atención: solo quedan {0} publicaciones con esta plantilla."
+  },
+  "filling": {
+    "message": "Rellenando…"
+  },
+  "f_images": {
+    "message": "fotos"
+  },
+  "f_title": {
+    "message": "título"
+  },
+  "f_price": {
+    "message": "precio"
+  },
+  "f_category": {
+    "message": "categoría"
+  },
+  "f_condition": {
+    "message": "estado"
+  },
+  "f_description": {
+    "message": "descripción"
+  },
+  "f_location": {
+    "message": "ubicación"
+  },
+  "toastDone": {
+    "message": "✓ Formulario rellenado"
+  },
+  "toastPartial": {
+    "message": "Formulario rellenado en parte"
+  },
+  "toastReview": {
+    "message": "Revisa manualmente"
+  },
+  "toastPressPublish": {
+    "message": "Revisa y presiona Publicar."
+  },
+  "fillOk": {
+    "message": "Listo. Revisa el formulario y presiona Publicar en Facebook."
+  },
+  "partialFill": {
+    "message": "Rellenado. Completa a mano: {0}."
+  },
+  "fillError": {
+    "message": "No se pudo rellenar. Recarga la página de Facebook (F5) e inténtalo de nuevo."
+  },
+  "captureNeedsFb": {
+    "message": "Abre un formulario de Marketplace con datos para guardarlo como plantilla."
+  },
+  "captureEmpty": {
+    "message": "El formulario está vacío. Escribe al menos el título."
+  },
+  "markedPublished": {
+    "message": "Marcado como publicado."
+  },
+  "navTemplates": {
+    "message": "Plantillas"
+  },
+  "navCalendar": {
+    "message": "Calendario"
+  },
+  "navHistory": {
+    "message": "Historial"
+  },
+  "navSettings": {
+    "message": "Ajustes"
+  },
+  "newTemplate": {
+    "message": "+ Nueva plantilla"
+  },
+  "newTemplateName": {
+    "message": "Nueva plantilla"
+  },
+  "templatesHelp": {
+    "message": "Cada plantilla es un borrador reutilizable. Al rellenar, se usa un título y una foto que nunca se hayan publicado."
+  },
+  "noTemplatesLong": {
+    "message": "Aún no tienes plantillas. Presiona “+ Nueva plantilla” o, desde Facebook, usa “Guardar formulario como plantilla” en la extensión."
+  },
+  "allClients": {
+    "message": "Todos los clientes"
+  },
+  "postsLeft": {
+    "message": "{0} publicaciones"
+  },
+  "edit": {
+    "message": "Editar"
+  },
+  "duplicate": {
+    "message": "Duplicar"
+  },
+  "delete": {
+    "message": "Eliminar"
+  },
+  "copySuffix": {
+    "message": "(copia)"
+  },
+  "duplicated": {
+    "message": "Plantilla duplicada."
+  },
+  "confirmDelete": {
+    "message": "¿Eliminar esta plantilla y sus fotos? No se puede deshacer."
+  },
+  "deleted": {
+    "message": "Eliminado."
+  },
+  "back": {
+    "message": "Volver"
+  },
+  "editTemplate": {
+    "message": "Editar plantilla"
+  },
+  "saved": {
+    "message": "Guardado"
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "secGeneral": {
+    "message": "Datos del anuncio"
+  },
+  "tplName": {
+    "message": "Nombre interno"
+  },
+  "client": {
+    "message": "Cliente"
+  },
+  "photosPerPost": {
+    "message": "Fotos por publicación"
+  },
+  "category": {
+    "message": "Categoría"
+  },
+  "condition": {
+    "message": "Estado"
+  },
+  "location": {
+    "message": "Ubicación"
+  },
+  "exactTextHelp": {
+    "message": "Escribe categoría, estado y ubicación tal como aparecen en Facebook. Si no coinciden, la extensión te avisará para elegirlos a mano."
+  },
+  "secTitles": {
+    "message": "Títulos"
+  },
+  "titlesHelp": {
+    "message": "Un título por línea. Puedes usar variables como {beneficio}, {ciudad} o {precio}. Cada título se publica una sola vez."
+  },
+  "secDescriptions": {
+    "message": "Descripciones"
+  },
+  "descriptionsHelp": {
+    "message": "Separa cada versión con una línea que solo tenga ---. Se usan por turnos y también aceptan variables."
+  },
+  "secVariables": {
+    "message": "Variables"
+  },
+  "variablesHelp": {
+    "message": "Una por línea: nombre = valor1 | valor2. Los títulos se combinan con todos los valores. Ya existen {precio}, {ciudad}, {cliente} y {fecha}."
+  },
+  "secImages": {
+    "message": "Fotos"
+  },
+  "addImages": {
+    "message": "+ Agregar fotos"
+  },
+  "imagesHelp": {
+    "message": "JPG, PNG o WEBP. Cada foto se publica una sola vez. Se guardan solo en este navegador."
+  },
+  "imagesAdded": {
+    "message": "{0} fotos agregadas."
+  },
+  "noImagesYet": {
+    "message": "Aún no hay fotos."
+  },
+  "used": {
+    "message": "Usada"
+  },
+  "available": {
+    "message": "Libre"
+  },
+  "secSummary": {
+    "message": "Resumen"
+  },
+  "availableTitles": {
+    "message": "Títulos libres"
+  },
+  "availablePhotos": {
+    "message": "Fotos libres"
+  },
+  "postsRemaining": {
+    "message": "Publicaciones posibles"
+  },
+  "secNextTitles": {
+    "message": "Próximos títulos"
+  },
+  "secReminder": {
+    "message": "Recordatorio"
+  },
+  "reminderEnabled": {
+    "message": "Activar recordatorio"
+  },
+  "publishDays": {
+    "message": "Días de publicación"
+  },
+  "reminderTime": {
+    "message": "Hora del aviso"
+  },
+  "reminderHelp": {
+    "message": "Chrome debe estar abierto para recibir el aviso."
+  },
+  "secUpcoming": {
+    "message": "Próximos días"
+  },
+  "upcomingHelp": {
+    "message": "Cambia un día puntual: publicar, solo renovar o saltar."
+  },
+  "auto": {
+    "message": "Automático"
+  },
+  "clearHistory": {
+    "message": "Borrar historial"
+  },
+  "historyHelp": {
+    "message": "Los títulos y fotos de las publicaciones registradas no se vuelven a usar. Eliminar un registro los libera."
+  },
+  "colDate": {
+    "message": "Fecha"
+  },
+  "colTitle": {
+    "message": "Título"
+  },
+  "colPhotos": {
+    "message": "Fotos"
+  },
+  "colStatus": {
+    "message": "Estado"
+  },
+  "hist_published": {
+    "message": "Publicado"
+  },
+  "hist_filled": {
+    "message": "Rellenado"
+  },
+  "noHistory": {
+    "message": "Aún no hay publicaciones."
+  },
+  "deleteEntryHelp": {
+    "message": "Libera el título y las fotos para usarlos otra vez"
+  },
+  "confirmDeleteEntry": {
+    "message": "¿Eliminar este registro? Su título y fotos podrán usarse de nuevo."
+  },
+  "confirmClearHistory": {
+    "message": "¿Borrar todo el historial? Todos los títulos y fotos podrán repetirse."
+  },
+  "secLanguage": {
+    "message": "Idioma"
+  },
+  "langAuto": {
+    "message": "Automático (navegador)"
+  },
+  "secBackup": {
+    "message": "Respaldo"
+  },
+  "backupHelp": {
+    "message": "Descarga un archivo con plantillas, fotos, historial y ajustes. Úsalo para pasar tus datos a otra computadora."
+  },
+  "export": {
+    "message": "Exportar respaldo"
+  },
+  "import": {
+    "message": "Importar respaldo"
+  },
+  "exported": {
+    "message": "Respaldo descargado."
+  },
+  "confirmImport": {
+    "message": "Importar reemplazará TODOS tus datos actuales. ¿Continuar?"
+  },
+  "imported": {
+    "message": "Respaldo importado."
+  },
+  "importError": {
+    "message": "El archivo no es un respaldo válido de DN Marketplace Helper."
+  },
+  "usage": {
+    "message": "Espacio usado: {0} MB"
+  },
+  "secAbout": {
+    "message": "Acerca de"
+  },
+  "aboutText": {
+    "message": "DN Marketplace Helper, de DigitalNeg. Software libre con licencia MIT."
+  },
+  "disclaimer": {
+    "message": "Esta herramienta no está afiliada a Meta ni a Facebook. Solo rellena el formulario: tú revisas y publicas. Cada usuario es responsable de cumplir las normas de Facebook Marketplace."
+  },
+  "privacyShort": {
+    "message": "Privacidad: todos tus datos se guardan solo en este navegador. La extensión no envía información a ningún servidor."
+  }
+}

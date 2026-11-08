@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>DN Marketplace Helper</title>
+  <link rel="stylesheet" href="../lib/ui.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="row">
+    <div class="brand"><img src="../../icons/icon48.png" alt=""><b data-i18n="extName"></b></div>
+    <span class="spacer"></span>
+    <button id="openPanel" class="small" data-i18n-title="openPanel">⚙</button>
+  </header>
+
+  <main class="stack">
+    <!-- Hoy -->
+    <section class="card" id="todayCard">
+      <div class="row">
+        <h2 id="todayTitle"></h2>
+        <span class="spacer"></span>
+        <span id="todayBadge" class="badge"></span>
+      </div>
+      <p id="todayText" class="muted"></p>
+      <div class="row" id="todayActions"></div>
+    </section>
+
+    <!-- Estado de la página -->
+    <div id="pageNotice" class="notice warn hidden">
+      <div data-i18n="notOnCreate"></div>
+      <button id="openCreate" class="small" style="margin-top:8px" data-i18n="openCreate"></button>
+    </div>
+
+    <!-- Pendiente -->
+    <section id="pendingCard" class="notice hidden">
+      <div><b data-i18n="pendingTitle"></b></div>
+      <div id="pendingText"></div>
+      <div class="row" style="margin-top:8px">
+        <button id="markPublished" class="small" data-i18n="markPublished"></button>
+        <button id="cancelPending" class="small" data-i18n="cancel"></button>
+      </div>
+    </section>
+
+    <!-- Plantilla -->
+    <section class="card stack" id="fillCard">
+      <label class="field">
+        <span data-i18n="template"></span>
+        <select id="tplSelect"></select>
+      </label>
+      <div id="emptyTpl" class="notice hidden" data-i18n="noTemplates"></div>
+      <div id="preview" class="preview hidden">
+        <img id="pvImg" alt="">
+        <div>
+          <div id="pvTitle" class="pv-title"></div>
+          <div id="pvPrice" class="muted"></div>
+          <div id="pvStats" class="muted"></div>
+        </div>
+      </div>
+      <div id="fillMsg" class="notice hidden"></div>
+      <button id="fillBtn" class="primary block">⚡ <span data-i18n="fill"></span></button>
+      <button id="captureBtn" class="block" data-i18n="capture"></button>
+    </section>
+  </main>
+
+  <footer class="muted row">
+    <span>DigitalNeg</span><span class="spacer"></span><span id="version"></span>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

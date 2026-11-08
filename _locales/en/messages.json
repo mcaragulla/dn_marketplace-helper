@@ -1,0 +1,408 @@
+{
+  "extName": {
+    "message": "DN Marketplace Helper",
+    "description": "Extension name"
+  },
+  "extDescription": {
+    "message": "Fill your Facebook Marketplace listings in one click from templates, never repeating titles or photos. You press Publish."
+  },
+  "notifyPublish": {
+    "message": "Today is a posting day on Marketplace. Open the extension and fill your listing."
+  },
+  "notifyRenew": {
+    "message": "Today is a renew day for your Marketplace listings."
+  },
+  "openPanel": {
+    "message": "Open dashboard"
+  },
+  "today": {
+    "message": "Today"
+  },
+  "status_publish": {
+    "message": "Post"
+  },
+  "status_renew": {
+    "message": "Renew only"
+  },
+  "status_skip": {
+    "message": "Skipped"
+  },
+  "status_off": {
+    "message": "Day off"
+  },
+  "todayPublishText": {
+    "message": "Open Create listing, choose a template and press Fill."
+  },
+  "todayRenewText": {
+    "message": "No new post today: renew your listings from Your listings."
+  },
+  "todaySkipText": {
+    "message": "No posting today."
+  },
+  "todayOffText": {
+    "message": "Today is not a posting day."
+  },
+  "nextPublish": {
+    "message": "Next: {0}."
+  },
+  "openSelling": {
+    "message": "Open Your listings"
+  },
+  "skipToday": {
+    "message": "Skip today"
+  },
+  "renewToday": {
+    "message": "Renew only today"
+  },
+  "resetToday": {
+    "message": "Reset"
+  },
+  "notOnCreate": {
+    "message": "Open Marketplace Create listing → Item for sale to be able to fill."
+  },
+  "openCreate": {
+    "message": "Open Create listing"
+  },
+  "pendingTitle": {
+    "message": "Filled, not published yet:"
+  },
+  "markPublished": {
+    "message": "Mark as published"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "template": {
+    "message": "Template"
+  },
+  "noTemplates": {
+    "message": "No templates yet. Create one in the dashboard or use “Save form as template”."
+  },
+  "fill": {
+    "message": "Fill"
+  },
+  "capture": {
+    "message": "Save form as template"
+  },
+  "noClient": {
+    "message": "No client"
+  },
+  "untitled": {
+    "message": "Untitled"
+  },
+  "price": {
+    "message": "Price"
+  },
+  "statsLine": {
+    "message": "Titles {0}/{1} · Photos {2}/{3}"
+  },
+  "noTitles": {
+    "message": "No unused titles left. Add new titles or variables to the template."
+  },
+  "noImages": {
+    "message": "No unused photos left. Add new photos to the template."
+  },
+  "lowStock": {
+    "message": "Heads up: only {0} posts left with this template."
+  },
+  "filling": {
+    "message": "Filling…"
+  },
+  "f_images": {
+    "message": "photos"
+  },
+  "f_title": {
+    "message": "title"
+  },
+  "f_price": {
+    "message": "price"
+  },
+  "f_category": {
+    "message": "category"
+  },
+  "f_condition": {
+    "message": "condition"
+  },
+  "f_description": {
+    "message": "description"
+  },
+  "f_location": {
+    "message": "location"
+  },
+  "toastDone": {
+    "message": "✓ Form filled"
+  },
+  "toastPartial": {
+    "message": "Form partially filled"
+  },
+  "toastReview": {
+    "message": "Check manually"
+  },
+  "toastPressPublish": {
+    "message": "Review and press Publish."
+  },
+  "fillOk": {
+    "message": "Done. Review the form and press Publish on Facebook."
+  },
+  "partialFill": {
+    "message": "Filled. Complete manually: {0}."
+  },
+  "fillError": {
+    "message": "Could not fill. Reload the Facebook page (F5) and try again."
+  },
+  "captureNeedsFb": {
+    "message": "Open a Marketplace form with data to save it as a template."
+  },
+  "captureEmpty": {
+    "message": "The form is empty. Enter at least the title."
+  },
+  "markedPublished": {
+    "message": "Marked as published."
+  },
+  "navTemplates": {
+    "message": "Templates"
+  },
+  "navCalendar": {
+    "message": "Calendar"
+  },
+  "navHistory": {
+    "message": "History"
+  },
+  "navSettings": {
+    "message": "Settings"
+  },
+  "newTemplate": {
+    "message": "+ New template"
+  },
+  "newTemplateName": {
+    "message": "New template"
+  },
+  "templatesHelp": {
+    "message": "Each template is a reusable draft. When filling, a title and photo never published before are used."
+  },
+  "noTemplatesLong": {
+    "message": "No templates yet. Press “+ New template” or, from Facebook, use “Save form as template” in the extension."
+  },
+  "allClients": {
+    "message": "All clients"
+  },
+  "postsLeft": {
+    "message": "{0} posts"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "duplicate": {
+    "message": "Duplicate"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "copySuffix": {
+    "message": "(copy)"
+  },
+  "duplicated": {
+    "message": "Template duplicated."
+  },
+  "confirmDelete": {
+    "message": "Delete this template and its photos? This cannot be undone."
+  },
+  "deleted": {
+    "message": "Deleted."
+  },
+  "back": {
+    "message": "Back"
+  },
+  "editTemplate": {
+    "message": "Edit template"
+  },
+  "saved": {
+    "message": "Saved"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "secGeneral": {
+    "message": "Listing details"
+  },
+  "tplName": {
+    "message": "Internal name"
+  },
+  "client": {
+    "message": "Client"
+  },
+  "photosPerPost": {
+    "message": "Photos per post"
+  },
+  "category": {
+    "message": "Category"
+  },
+  "condition": {
+    "message": "Condition"
+  },
+  "location": {
+    "message": "Location"
+  },
+  "exactTextHelp": {
+    "message": "Type category, condition and location exactly as Facebook shows them. If they don't match, the extension will ask you to pick them manually."
+  },
+  "secTitles": {
+    "message": "Titles"
+  },
+  "titlesHelp": {
+    "message": "One title per line. You can use variables like {beneficio}, {ciudad} or {precio}. Each title is posted only once."
+  },
+  "secDescriptions": {
+    "message": "Descriptions"
+  },
+  "descriptionsHelp": {
+    "message": "Separate each version with a line containing only ---. They rotate and also accept variables."
+  },
+  "secVariables": {
+    "message": "Variables"
+  },
+  "variablesHelp": {
+    "message": "One per line: name = value1 | value2. Titles combine with every value. Built-in: {precio}, {ciudad}, {cliente} and {fecha}."
+  },
+  "secImages": {
+    "message": "Photos"
+  },
+  "addImages": {
+    "message": "+ Add photos"
+  },
+  "imagesHelp": {
+    "message": "JPG, PNG or WEBP. Each photo is posted only once. Stored only in this browser."
+  },
+  "imagesAdded": {
+    "message": "{0} photos added."
+  },
+  "noImagesYet": {
+    "message": "No photos yet."
+  },
+  "used": {
+    "message": "Used"
+  },
+  "available": {
+    "message": "Free"
+  },
+  "secSummary": {
+    "message": "Summary"
+  },
+  "availableTitles": {
+    "message": "Free titles"
+  },
+  "availablePhotos": {
+    "message": "Free photos"
+  },
+  "postsRemaining": {
+    "message": "Posts remaining"
+  },
+  "secNextTitles": {
+    "message": "Next titles"
+  },
+  "secReminder": {
+    "message": "Reminder"
+  },
+  "reminderEnabled": {
+    "message": "Enable reminder"
+  },
+  "publishDays": {
+    "message": "Posting days"
+  },
+  "reminderTime": {
+    "message": "Reminder time"
+  },
+  "reminderHelp": {
+    "message": "Chrome must be open to receive the reminder."
+  },
+  "secUpcoming": {
+    "message": "Upcoming days"
+  },
+  "upcomingHelp": {
+    "message": "Change a single day: post, renew only or skip."
+  },
+  "auto": {
+    "message": "Automatic"
+  },
+  "clearHistory": {
+    "message": "Clear history"
+  },
+  "historyHelp": {
+    "message": "Titles and photos in published entries are never reused. Deleting an entry frees them."
+  },
+  "colDate": {
+    "message": "Date"
+  },
+  "colTitle": {
+    "message": "Title"
+  },
+  "colPhotos": {
+    "message": "Photos"
+  },
+  "colStatus": {
+    "message": "Status"
+  },
+  "hist_published": {
+    "message": "Published"
+  },
+  "hist_filled": {
+    "message": "Filled"
+  },
+  "noHistory": {
+    "message": "No posts yet."
+  },
+  "deleteEntryHelp": {
+    "message": "Frees the title and photos for reuse"
+  },
+  "confirmDeleteEntry": {
+    "message": "Delete this entry? Its title and photos can be used again."
+  },
+  "confirmClearHistory": {
+    "message": "Clear all history? All titles and photos may be repeated."
+  },
+  "secLanguage": {
+    "message": "Language"
+  },
+  "langAuto": {
+    "message": "Automatic (browser)"
+  },
+  "secBackup": {
+    "message": "Backup"
+  },
+  "backupHelp": {
+    "message": "Download a file with templates, photos, history and settings. Use it to move your data to another computer."
+  },
+  "export": {
+    "message": "Export backup"
+  },
+  "import": {
+    "message": "Import backup"
+  },
+  "exported": {
+    "message": "Backup downloaded."
+  },
+  "confirmImport": {
+    "message": "Importing will replace ALL your current data. Continue?"
+  },
+  "imported": {
+    "message": "Backup imported."
+  },
+  "importError": {
+    "message": "The file is not a valid DN Marketplace Helper backup."
+  },
+  "usage": {
+    "message": "Storage used: {0} MB"
+  },
+  "secAbout": {
+    "message": "About"
+  },
+  "aboutText": {
+    "message": "DN Marketplace Helper by DigitalNeg. Free software under the MIT license."
+  },
+  "disclaimer": {
+    "message": "This tool is not affiliated with Meta or Facebook. It only fills the form: you review and publish. Each user is responsible for following Facebook Marketplace rules."
+  },
+  "privacyShort": {
+    "message": "Privacy: all your data stays in this browser. The extension never sends information to any server."
+  }
+}

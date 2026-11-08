@@ -1,0 +1,16 @@
+{
+  "name": "dn_marketplace-helper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Extensión de Chrome para rellenar publicaciones de Facebook Marketplace con plantillas.",
+  "author": "DigitalNeg <info@digital-neg.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node test/e2e.mjs",
+    "zip": "node scripts/zip.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
