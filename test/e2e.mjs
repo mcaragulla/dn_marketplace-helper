@@ -49,13 +49,28 @@ await opt.click('#newTpl');
 await opt.waitForSelector('#view-editor.active');
 await opt.fill('#e_name', 'Taladro promo');
 await opt.fill('#e_client', 'Ferretería López');
-await opt.fill('#e_price', '$45');
+await opt.fill('#e_price', '$16.99');
 await opt.fill('#e_category', 'Herramientas');
 await opt.fill('#e_condition', 'Usado - Como nuevo');
 await opt.fill('#e_location', 'Quito');
 await opt.fill('#e_titles', 'Taladro {marca} en {ciudad}\nTaladro barato {beneficio}');
 await opt.fill('#e_descriptions', 'Descripción A {beneficio}\n---\nDescripción B precio {precio}');
 await opt.fill('#e_variables', 'marca = Bosch | Dewalt\nbeneficio = envío gratis | garantía');
+await opt.fill('#e_availability', 'Publicar como disponible');
+await opt.fill('#e_sku', 'TAL-001');
+await opt.check('#e_dl_meetup'); await opt.check('#e_dl_dropoff'); await opt.uncheck('#e_dl_pickup');
+await opt.check('#e_hide');
+await opt.fill('#e_benefits', 'Motor potente\nGarantía de 1 año');
+await opt.fill('#e_features', 'Batería de litio');
+await opt.fill('#e_deliveryInfo', 'Entregas en todo Quito');
+await opt.waitForTimeout(800);
+ok((await opt.textContent('#priceWarn')).includes('17') && await opt.isVisible('#priceWarn'), 'aviso de centavos: ' + await opt.textContent('#priceWarn'));
+await opt.click('#suggestTags'); await opt.waitForTimeout(500);
+const tagsVal = await opt.inputValue('#e_tags');
+ok(tagsVal.split(',').length >= 5, 'etiquetas sugeridas: ' + tagsVal);
+await opt.click('#suggestDesc'); await opt.waitForTimeout(500);
+const descVal = await opt.inputValue('#e_descriptions');
+ok(descVal.includes('Motor potente') && descVal.split('---').length >= 4, 'descripciones sugeridas agregadas');
 await opt.setInputFiles('#e_files', imgs);
 await opt.waitForTimeout(1200);
 await opt.click('#saveTpl');
@@ -104,43 +119,67 @@ ok(!!firstOpt, 'popup lista plantillas: ' + firstOpt);
 await pop.selectOption('#tplSelect', { index: 0 });
 await pop.waitForTimeout(400);
 await pop.screenshot({ path: path.join(shots, 'popup.png') });
-await pop.click('#fillBtn');
-await pop.waitForTimeout(6000);
-const msg = await pop.textContent('#fillMsg');
-console.log('   mensaje popup:', msg);
+ok(await pop.isVisible('#fillBtn'), 'popup muestra "Rellenar esta página" en el formulario');
+await pop.close();
+await fb.close();
+// Botón Publicar del panel: abre Marketplace en otra pestaña y rellena
+await opt.goto(`chrome-extension://${extId}/src/options/options.html#templates`);
+await opt.waitForTimeout(600);
+const tabPromise = ctx.waitForEvent('page');
+await opt.locator('.tpl-card').first().locator('button.publish').click();
+const fbNew = await tabPromise; watch(fbNew, 'fb2');
+await fbNew.waitForLoadState();
+// El simulador de red no alcanza a la pestaña que abre la extensión: se recarga para servir el formulario simulado.
+// La extensión sigue esperando el formulario y lo rellena sola.
+await fbNew.waitForTimeout(500);
+await fbNew.goto('https://www.facebook.com/marketplace/create/item');
+await fbNew.waitForFunction(() => { const e = document.getElementById('title'); return e && e.value.length > 0; }, null, { timeout: 30000 });
+await fbNew.waitForFunction(() => document.getElementById('hide').checked, null, { timeout: 30000 }).catch(() => {});
+await fbNew.waitForTimeout(1500);
 
-const st = await fb.evaluate(() => ({
+const st = await fbNew.evaluate(() => ({
   title: document.getElementById('title').value, price: document.getElementById('price').value,
   desc: document.getElementById('desc').value, cat: document.getElementById('catValue').textContent,
   cond: document.getElementById('condValue').textContent, loc: document.getElementById('loc').value,
-  photos: document.getElementById('photoCount').textContent, react: window.__state
+  photos: document.getElementById('photoCount').textContent, react: window.__state,
+  avail: document.getElementById('availValue').textContent, sku: document.getElementById('sku').value,
+  chips: [...document.querySelectorAll('.chip')].map(c => c.textContent),
+  dl: ['dl1','dl2','dl3'].map(id => document.getElementById(id).getAttribute('aria-checked')),
+  promo: document.getElementById('promo').getAttribute('aria-checked'), hide: document.getElementById('hide').checked
 }));
 console.log('   formulario:', JSON.stringify(st));
 ok(st.title === 'Taladro Bosch en Quito', 'título rellenado');
-ok(st.price === '45', 'precio rellenado (solo números)');
+ok(st.price === '17', 'precio redondeado (16.99 → 17)');
 ok(st.cat === 'Herramientas', 'categoría elegida');
 ok(st.cond === 'Usado: como nuevo', 'estado elegido aunque el texto difiera en signos');
 ok(st.desc.startsWith('Descripción A'), 'descripción rellenada (abriendo Más detalles)');
 ok(st.loc === 'Quito, Ecuador', 'ubicación elegida de la lista');
 ok(st.photos.startsWith('1:'), 'foto cargada en el input de archivos');
-await fb.screenshot({ path: path.join(shots, 'fb-filled.png'), fullPage: true });
+ok(st.avail === 'Publicar como disponible', 'disponibilidad elegida');
+ok(st.sku === 'TAL-001', 'SKU rellenado');
+ok(st.chips.length >= 5, 'etiquetas creadas: ' + st.chips.length);
+ok(JSON.stringify(st.dl) === '["true","false","true"]', 'preferencias de entrega: ' + st.dl);
+ok(st.promo === 'false', 'promocionar apagado');
+ok(st.hide === true, 'ocultar a amigos activado');
+await fbNew.screenshot({ path: path.join(shots, 'fb-filled.png'), fullPage: true });
 
 // 4) Presionar Publicar → historial "publicado"
-await fb.click('#publish');
-await fb.waitForTimeout(800);
+await fbNew.click('#publish');
+await fbNew.waitForTimeout(800);
 const stored = await opt.evaluate(async () => (await chrome.storage.local.get('dnmh')).dnmh);
 ok(stored.history.length === 1 && stored.history[0].status === 'published', 'clic en Publicar registrado en historial');
 ok(stored.pending === null, 'pendiente limpiado');
 
-// 5) Segunda publicación: título y foto distintos
-await fb.reload(); await fb.waitForTimeout(800);
-await pop.close();
+// 5) Segunda publicación desde el popup ("Rellenar esta página"): título y foto distintos
+const fb3 = await ctx.newPage(); watch(fb3, 'fb3');
+await fb3.goto('https://www.facebook.com/marketplace/create/item'); await fb3.waitForTimeout(800);
+await fbNew.close();
 pop = await openPopup();
 await pop.click('#fillBtn');
 await pop.waitForTimeout(6000);
-const t2 = await fb.$eval('#title', (e) => e.value);
+const t2 = await fb3.$eval('#title', (e) => e.value);
 ok(t2 !== 'Taladro Bosch en Quito' && t2.length > 0, 'segundo título distinto: ' + t2);
-await fb.click('#publish'); await fb.waitForTimeout(800);
+await fb3.click('#publish'); await fb3.waitForTimeout(800);
 const s2 = await opt.evaluate(async () => (await chrome.storage.local.get('dnmh')).dnmh);
 const imgsUsed = s2.history.flatMap((h) => h.imageIds);
 ok(new Set(imgsUsed).size === imgsUsed.length && imgsUsed.length === 2, 'fotos no repetidas entre publicaciones');

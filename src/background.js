@@ -2,6 +2,7 @@
 import { load, update, STORAGE_KEY } from './lib/store.js';
 import { nextReminderTime, dayStatus } from './lib/engine.js';
 import { resolveLang } from './lib/i18n.js';
+import { fillTab, waitForForm, URL_CREATE as FILL_URL } from './lib/filler.js';
 
 const ALARM = 'dnmh-reminder';
 const URL_CREATE = 'https://www.facebook.com/marketplace/create/item';
@@ -52,7 +53,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 });
 
 chrome.notifications.onClicked.addListener((id) => {
-  if (!id.startsWith('dnmh-')) return;
+  if (!id.startsWith('dnmh-') || id.startsWith('dnmh-err-')) { chrome.notifications.clear(id); return; }
   chrome.tabs.create({ url: id.includes('-renew-') ? URL_SELLING : URL_CREATE });
   chrome.notifications.clear(id);
 });
@@ -62,6 +63,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message && message.type === 'dnmh:published') {
     markPublished('auto').then(sendResponse);
     return true;
+  }
+  if (message && message.type === 'dnmh:publish') {
+    publishFlow(message.templateId);
+    sendResponse({ started: true });
+    return false;
   }
   if (message && message.type === 'dnmh:markPublished') {
     markPublished('manual').then(sendResponse);
@@ -90,4 +96,21 @@ async function markPublished(source) {
     setTimeout(() => chrome.action.setBadgeText({ text: '' }), 8000);
   }
   return { ok: !!entry };
+}
+
+/* ---------- Botón "Publicar": abre Marketplace y rellena ---------- */
+async function publishFlow(templateId) {
+  const tab = await chrome.tabs.create({ url: FILL_URL, active: true });
+  const ready = await waitForForm(tab.id);
+  const res = ready.ok ? await fillTab(tab.id, templateId) : ready;
+  if (!res.ok) {
+    await chrome.notifications.create(`dnmh-err-${Date.now()}`, {
+      type: 'basic',
+      iconUrl: chrome.runtime.getURL('icons/icon128.png'),
+      title: await msg('extName'),
+      message: await msg(res.error),
+      priority: 2
+    });
+  }
+  return res;
 }

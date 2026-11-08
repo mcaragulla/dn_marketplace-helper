@@ -7,3 +7,4 @@ footer { margin-top: 10px; }
 .preview img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; background: #E5E7EB; flex: none; }
 .preview img[src=""] { visibility: hidden; }
 .pv-title { font-weight: 600; word-break: break-word; }
+.ico { width: 18px; height: 18px; flex: none; }

@@ -9,7 +9,17 @@
     category: ['Categoría', 'Category'],
     condition: ['Estado', 'Condition'],
     description: ['Descripción', 'Description'],
-    location: ['Ubicación', 'Location']
+    location: ['Ubicación', 'Location'],
+    availability: ['Disponibilidad', 'Availability'],
+    tags: ['Etiquetas de productos', 'Product tags'],
+    sku: ['SKU']
+  };
+  const TOGGLES = {
+    publicMeetup: ['Encuentro en un lugar público', 'Public meetup'],
+    doorPickup: ['Retiro en la puerta', 'Door pickup'],
+    doorDropoff: ['Entrega en la puerta', 'Door drop-off', 'Door dropoff'],
+    hideFromFriends: ['Ocultar a amigos', 'Hide from friends'],
+    promote: ['Promocionar tras publicar', 'Boost listing after publishing', 'Boost after publishing']
   };
   const MORE_DETAILS = ['mas detalles', 'more details'];
   const PUBLISH = ['publicar', 'publish'];
@@ -41,7 +51,7 @@
       || (lab.htmlFor ? document.getElementById(lab.htmlFor) : null);
   }
 
-  function setValue(el, value) {
+  function setValue(el, value, keepFocus) {
     el.focus();
     if (el.isContentEditable) {
       document.execCommand('selectAll', false, null);
@@ -52,7 +62,53 @@
       el.dispatchEvent(new Event('input', { bubbles: true }));
       el.dispatchEvent(new Event('change', { bubbles: true }));
     }
+    if (!keepFocus) el.blur();
+  }
+
+  function pressEnter(el) {
+    const opts = { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true, cancelable: true };
+    el.dispatchEvent(new KeyboardEvent('keydown', opts));
+    el.dispatchEvent(new KeyboardEvent('keypress', opts));
+    el.dispatchEvent(new KeyboardEvent('keyup', opts));
+  }
+
+  async function setTags(tags) {
+    if (!tags || !tags.length) return 'skip';
+    const el = findField(LABELS.tags);
+    if (!el) return false;
+    for (const tag of tags) {
+      setValue(el, tag, true);
+      pressEnter(el);
+      await sleep(150);
+    }
     el.blur();
+    return true;
+  }
+
+  /* ---------- Casillas e interruptores ---------- */
+  const CONTROL = 'input[type="checkbox"], [role="checkbox"], [role="switch"]';
+
+  function findToggle(texts) {
+    const wanted = texts.map((x) => key(x));
+    for (const leaf of document.querySelectorAll('span, div, label')) {
+      if (leaf.children.length || !wanted.includes(key(leaf.textContent)) || !visible(leaf)) continue;
+      let p = leaf.parentElement;
+      for (let i = 0; p && i < 10; i++, p = p.parentElement) {
+        const ctrls = p.querySelectorAll(CONTROL);
+        if (ctrls.length === 1) return ctrls[0];
+        if (ctrls.length > 1) break;
+      }
+    }
+    return null;
+  }
+
+  const isOn = (c) => (c.tagName === 'INPUT' ? c.checked : c.getAttribute('aria-checked') === 'true');
+
+  async function setToggle(texts, want) {
+    const c = findToggle(texts);
+    if (!c) return false;
+    if (isOn(c) !== want) { c.click(); await sleep(200); }
+    return isOn(c) === want;
   }
 
   function readValue(el) {
@@ -162,7 +218,19 @@
     r.condition = await choose(LABELS.condition, p.condition);
     if (p.description && !findField(LABELS.description)) { expandMoreDetails(); await sleep(400); }
     r.description = setText(LABELS.description, p.description);
+    r.availability = await choose(LABELS.availability, p.availability);
+    r.tags = await setTags(p.tags);
+    r.sku = setText(LABELS.sku, p.sku);
     r.location = await setLocation(p.location);
+    if (p.delivery) {
+      const res = [];
+      for (const k of ['publicMeetup', 'doorPickup', 'doorDropoff']) res.push(await setToggle(TOGGLES[k], !!p.delivery[k]));
+      r.delivery = res.every(Boolean);
+    }
+    const hide = findToggle(TOGGLES.hideFromFriends);
+    r.hideFromFriends = hide ? await setToggle(TOGGLES.hideFromFriends, !!p.hideFromFriends) : (p.hideFromFriends ? false : 'skip');
+    // Nunca activar "Promocionar": eso lleva a pagar publicidad.
+    r.promote = findToggle(TOGGLES.promote) ? await setToggle(TOGGLES.promote, false) : 'skip';
     return r;
   }
 
@@ -225,7 +293,12 @@
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     if (!msg || typeof msg.type !== 'string') return false;
     if (msg.type === 'dnmh:ping') {
-      sendResponse({ ok: true, isCreate: /\/marketplace\/create/.test(location.pathname) });
+      sendResponse({
+        ok: true,
+        isCreate: /\/marketplace\/create/.test(location.pathname),
+        formReady: !!findField(LABELS.title),
+        needsLogin: /\/login/.test(location.pathname) || !!document.querySelector('input[name="pass"]')
+      });
       return false;
     }
     if (msg.type === 'dnmh:read') {

@@ -57,12 +57,6 @@
   "resetToday": {
     "message": "Restablecer"
   },
-  "notOnCreate": {
-    "message": "Abre la página Crear publicación → Artículo en venta de Marketplace para poder rellenar."
-  },
-  "openCreate": {
-    "message": "Abrir Crear publicación"
-  },
   "pendingTitle": {
     "message": "Rellenado, falta publicar:"
   },
@@ -76,10 +70,7 @@
     "message": "Plantilla"
   },
   "noTemplates": {
-    "message": "Aún no tienes plantillas. Crea una en el panel o usa “Guardar formulario como plantilla”."
-  },
-  "fill": {
-    "message": "Rellenar"
+    "message": "Aún no tienes plantillas. Crea una en el panel (⚙)."
   },
   "capture": {
     "message": "Guardar formulario como plantilla"
@@ -404,5 +395,113 @@
   },
   "privacyShort": {
     "message": "Privacidad: todos tus datos se guardan solo en este navegador. La extensión no envía información a ningún servidor."
+  },
+  "publish": {
+    "message": "Publicar"
+  },
+  "fillThisPage": {
+    "message": "Rellenar esta página"
+  },
+  "f_availability": {
+    "message": "disponibilidad"
+  },
+  "f_tags": {
+    "message": "etiquetas"
+  },
+  "f_sku": {
+    "message": "SKU"
+  },
+  "f_delivery": {
+    "message": "preferencias de entrega"
+  },
+  "f_hideFromFriends": {
+    "message": "ocultar a amigos"
+  },
+  "f_promote": {
+    "message": "promocionar (apagar)"
+  },
+  "availability": {
+    "message": "Disponibilidad"
+  },
+  "sku": {
+    "message": "SKU (solo visible para ti)"
+  },
+  "secDelivery": {
+    "message": "Entrega y visibilidad"
+  },
+  "publicMeetup": {
+    "message": "Encuentro en un lugar público"
+  },
+  "doorPickup": {
+    "message": "Retiro en la puerta"
+  },
+  "doorDropoff": {
+    "message": "Entrega en la puerta"
+  },
+  "hideFromFriends": {
+    "message": "Ocultar a amigos"
+  },
+  "promoteOff": {
+    "message": "“Promocionar tras publicar” siempre queda apagado para que no se cobre publicidad."
+  },
+  "secSuggest": {
+    "message": "Sugerir textos vendedores"
+  },
+  "suggestHelp": {
+    "message": "Escribe beneficios y características; la extensión arma descripciones y etiquetas listas para usar. Puedes editarlas después."
+  },
+  "benefits": {
+    "message": "Beneficios (uno por línea)"
+  },
+  "benefitsPh": {
+    "message": "100% impermeable\nCosturas herméticas"
+  },
+  "features": {
+    "message": "Características (una por línea)"
+  },
+  "featuresPh": {
+    "message": "Tallas S a XXL\nPVC de alta resistencia"
+  },
+  "deliveryInfo": {
+    "message": "Entrega o contacto"
+  },
+  "deliveryInfoPh": {
+    "message": "Entregas en todo Quito"
+  },
+  "useEmojis": {
+    "message": "Usar emojis"
+  },
+  "suggestDescriptions": {
+    "message": "Sugerir descripciones"
+  },
+  "suggestTags": {
+    "message": "Sugerir etiquetas"
+  },
+  "secTags": {
+    "message": "Etiquetas de productos"
+  },
+  "tagsHelp": {
+    "message": "Separadas por coma. Máximo 20."
+  },
+  "tagsCount": {
+    "message": "{0} / 20 etiquetas"
+  },
+  "descriptionsAdded": {
+    "message": "{0} descripciones agregadas."
+  },
+  "tagsSuggested": {
+    "message": "{0} etiquetas listas."
+  },
+  "priceRounded": {
+    "message": "Facebook no acepta centavos: se publicará como {0}."
+  },
+  "needsLogin": {
+    "message": "Inicia sesión en Facebook y vuelve a presionar Publicar."
+  },
+  "formTimeout": {
+    "message": "El formulario de Marketplace tardó demasiado en cargar. Inténtalo de nuevo."
+  },
+  "noTemplate": {
+    "message": "La plantilla ya no existe."
   }
 }

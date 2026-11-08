@@ -1,9 +1,9 @@
 import { load, update, newTemplate, ymd } from '../lib/store.js';
 import { nextPost, stats, dayStatus, nextDayWith } from '../lib/engine.js';
-import { getImage, blobToDataUrl, uid } from '../lib/db.js';
+import { getImage } from '../lib/db.js';
+import { fillTab } from '../lib/filler.js';
 import { initI18n, applyI18n, t, lang } from '../lib/i18n.js';
 
-const URL_CREATE = 'https://www.facebook.com/marketplace/create/item';
 const URL_SELLING = 'https://www.facebook.com/marketplace/you/selling';
 const $ = (id) => document.getElementById(id);
 
@@ -20,7 +20,7 @@ async function init() {
   applyI18n();
   $('version').textContent = 'v' + chrome.runtime.getManifest().version;
   $('openPanel').onclick = () => chrome.runtime.openOptionsPage();
-  $('openCreate').onclick = () => chrome.tabs.create({ url: URL_CREATE });
+  $('publishBtn').onclick = onPublish;
   $('fillBtn').onclick = onFill;
   $('captureBtn').onclick = onCapture;
   $('markPublished').onclick = onMarkPublished;
@@ -56,8 +56,7 @@ async function ensureContent() {
 
 async function checkPage() {
   const res = await ensureContent();
-  pageOk = !!(res && res.isCreate);
-  $('pageNotice').classList.toggle('hidden', pageOk);
+  pageOk = !!(res && res.isCreate && res.formReady);
 }
 
 /* ---------- Render ---------- */
@@ -122,7 +121,8 @@ function renderTemplates() {
   const has = data.templates.length > 0;
   $('emptyTpl').classList.toggle('hidden', has);
   sel.disabled = !has;
-  $('fillBtn').disabled = !has || !pageOk;
+  $('publishBtn').disabled = !has;
+  $('fillBtn').classList.toggle('hidden', !has || !pageOk);
   const groups = {};
   data.templates.forEach((tpl) => {
     const c = tpl.client || t('noClient');
@@ -179,51 +179,28 @@ function showMsg(text, kind = '') {
 function hideMsg() { $('fillMsg').className = 'notice hidden'; }
 
 /* ---------- Acciones ---------- */
-async function onFill() {
+async function onPublish() {
   const tpl = currentTpl();
   if (!tpl) return;
   data = await load();
   const np = nextPost(tpl, data.history);
   if (np.error) return showMsg(t(np.error), 'danger');
+  await chrome.runtime.sendMessage({ type: 'dnmh:publish', templateId: tpl.id });
+  window.close();
+}
 
+async function onFill() {
+  const tpl = currentTpl();
+  if (!tpl) return;
   $('fillBtn').disabled = true;
   showMsg(t('filling'));
-  try {
-    const images = [];
-    for (const id of np.imageIds) {
-      const rec = await getImage(id);
-      if (rec) images.push({ name: rec.name, type: rec.type, dataUrl: await blobToDataUrl(rec.blob) });
-    }
-    const fields = {
-      images: t('f_images'), title: t('f_title'), price: t('f_price'), category: t('f_category'),
-      condition: t('f_condition'), description: t('f_description'), location: t('f_location')
-    };
-    const res = await chrome.tabs.sendMessage(tab.id, {
-      type: 'dnmh:fill',
-      payload: { ...np, images },
-      ui: { done: t('toastDone'), partial: t('toastPartial'), review: t('toastReview'), pressPublish: t('toastPressPublish'), fields }
-    });
-    if (!res || !res.ok) throw new Error(res && res.error);
-
-    // Registrar como "rellenado" (se confirma al presionar Publicar).
-    data = await update((d) => {
-      if (d.pending) d.history = d.history.filter((h) => !(h.id === d.pending.historyId && h.status === 'filled'));
-      const entry = {
-        id: uid(), date: Date.now(), templateId: tpl.id, templateName: tpl.name, client: tpl.client || '',
-        title: np.title, imageIds: np.imageIds, price: np.price, status: 'filled'
-      };
-      d.history.unshift(entry);
-      d.pending = { historyId: entry.id, templateId: tpl.id };
-    });
-    const failed = Object.keys(res.report).filter((k) => res.report[k] === false);
-    if (failed.length) showMsg(t('partialFill', failed.map((k) => fields[k]).join(', ')), 'warn');
-    else showMsg(t('fillOk'), 'ok');
-    renderPending();
-  } catch (e) {
-    showMsg(t('fillError'), 'danger');
-  } finally {
-    $('fillBtn').disabled = !pageOk;
-  }
+  const res = await fillTab(tab.id, tpl.id);
+  $('fillBtn').disabled = false;
+  if (!res.ok) return showMsg(t(res.error), 'danger');
+  if (res.failed.length) showMsg(t('partialFill', res.failed.map((k) => res.fieldNames[k]).join(', ')), 'warn');
+  else showMsg(t('fillOk'), 'ok');
+  data = await load();
+  renderPending();
 }
 
 async function onCapture() {

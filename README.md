@@ -20,7 +20,9 @@
 ### ¿Qué hace?
 
 - **Varias plantillas o borradores**: guarda un borrador por producto o cliente y reutilízalo cuantas veces quieras.
-- **Rellenar con un clic**: completa título, precio, categoría, estado, descripción, ubicación y fotos en el formulario **Artículo en venta**.
+- **Botón Publicar**: abre Marketplace y rellena solo el formulario **Artículo en venta**: fotos, título, precio, categoría, estado, descripción, disponibilidad, etiquetas, SKU, ubicación, preferencias de entrega y ocultar a amigos.
+- **✨ Sugerir textos**: genera descripciones vendedoras y hasta 20 etiquetas a partir de tus beneficios y características.
+- **Precio sin centavos**: Facebook no los acepta, así que se redondea al rellenar (16.99 → 17).
 - **Sin repeticiones**: nunca usa dos veces el mismo título ni la misma foto. Te avisa cuando quedan pocos.
 - **Variables**: escribe `Taladro {marca} en {ciudad}` y genera muchos títulos distintos automáticamente.
 - **Duplicar y corregir**: copia una plantilla y ajusta solo lo que cambia.
@@ -49,9 +51,9 @@
 ### Uso rápido
 
 1. Abre el **panel** (⚙ en la extensión) y crea una plantilla: datos, títulos, descripciones y fotos.
-2. En Facebook entra a **Marketplace → Crear publicación → Artículo en venta**.
-3. Abre la extensión, elige la plantilla y presiona **⚡ Rellenar**.
-4. Revisa el formulario y presiona **Siguiente / Publicar** en Facebook.
+2. Presiona **Publicar** en la plantilla (en el panel o en la ventana de la extensión). Se abre Marketplace y el formulario se rellena solo.
+3. Revisa el formulario y presiona **Siguiente / Publicar** en Facebook.
+4. ¿Ya estás en el formulario? Usa **Rellenar esta página**.
 5. La extensión detecta que publicaste y marca ese título y esas fotos como usados. Si no lo detecta, usa **Marcar como publicado**.
 
 ### Escribir plantillas
@@ -78,7 +80,8 @@ Esta herramienta **no está afiliada a Meta ni a Facebook**. Solo rellena el for
 ### What it does
 
 - **Multiple templates/drafts** per product or client.
-- **One-click fill** of title, price, category, condition, description, location and photos on the **Item for sale** form.
+- **Publish button** opens Marketplace and fills the **Item for sale** form: photos, title, price, category, condition, description, availability, tags, SKU, location, delivery preferences and hide from friends.
+- **✨ Suggest** sales descriptions and up to 20 tags. Prices are rounded (Facebook doesn't accept cents).
 - **No repeats**: a title or photo is never used twice; you get a warning when stock runs low.
 - **Variables**: `Drill {brand} in {city}` expands into many unique titles.
 - **Duplicate & edit** templates; **save a form filled by hand** as a template.
@@ -93,7 +96,7 @@ Esta herramienta **no está afiliada a Meta ni a Facebook**. Solo rellena el for
 
 ### Use
 
-Create a template in the dashboard → open **Marketplace → Create listing → Item for sale** → open the extension → **⚡ Fill** → review and press **Publish** yourself.
+Create a template in the dashboard → press **Publish** on it → Marketplace opens and the form fills itself → review and press **Publish** on Facebook yourself.
 
 ### Privacy & disclaimer
 

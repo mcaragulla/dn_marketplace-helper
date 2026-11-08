@@ -57,12 +57,6 @@
   "resetToday": {
     "message": "Reset"
   },
-  "notOnCreate": {
-    "message": "Open Marketplace Create listing → Item for sale to be able to fill."
-  },
-  "openCreate": {
-    "message": "Open Create listing"
-  },
   "pendingTitle": {
     "message": "Filled, not published yet:"
   },
@@ -76,10 +70,7 @@
     "message": "Template"
   },
   "noTemplates": {
-    "message": "No templates yet. Create one in the dashboard or use “Save form as template”."
-  },
-  "fill": {
-    "message": "Fill"
+    "message": "No templates yet. Create one in the dashboard (⚙)."
   },
   "capture": {
     "message": "Save form as template"
@@ -404,5 +395,113 @@
   },
   "privacyShort": {
     "message": "Privacy: all your data stays in this browser. The extension never sends information to any server."
+  },
+  "publish": {
+    "message": "Publish"
+  },
+  "fillThisPage": {
+    "message": "Fill this page"
+  },
+  "f_availability": {
+    "message": "availability"
+  },
+  "f_tags": {
+    "message": "tags"
+  },
+  "f_sku": {
+    "message": "SKU"
+  },
+  "f_delivery": {
+    "message": "delivery preferences"
+  },
+  "f_hideFromFriends": {
+    "message": "hide from friends"
+  },
+  "f_promote": {
+    "message": "boost (turn off)"
+  },
+  "availability": {
+    "message": "Availability"
+  },
+  "sku": {
+    "message": "SKU (only visible to you)"
+  },
+  "secDelivery": {
+    "message": "Delivery & visibility"
+  },
+  "publicMeetup": {
+    "message": "Public meetup"
+  },
+  "doorPickup": {
+    "message": "Door pickup"
+  },
+  "doorDropoff": {
+    "message": "Door drop-off"
+  },
+  "hideFromFriends": {
+    "message": "Hide from friends"
+  },
+  "promoteOff": {
+    "message": "“Boost after publishing” is always kept off so no ads are charged."
+  },
+  "secSuggest": {
+    "message": "Suggest sales copy"
+  },
+  "suggestHelp": {
+    "message": "Write benefits and features; the extension builds ready-to-use descriptions and tags. You can edit them afterwards."
+  },
+  "benefits": {
+    "message": "Benefits (one per line)"
+  },
+  "benefitsPh": {
+    "message": "100% waterproof\nSealed seams"
+  },
+  "features": {
+    "message": "Features (one per line)"
+  },
+  "featuresPh": {
+    "message": "Sizes S to XXL\nHeavy-duty PVC"
+  },
+  "deliveryInfo": {
+    "message": "Delivery or contact"
+  },
+  "deliveryInfoPh": {
+    "message": "Delivery across the city"
+  },
+  "useEmojis": {
+    "message": "Use emojis"
+  },
+  "suggestDescriptions": {
+    "message": "Suggest descriptions"
+  },
+  "suggestTags": {
+    "message": "Suggest tags"
+  },
+  "secTags": {
+    "message": "Product tags"
+  },
+  "tagsHelp": {
+    "message": "Comma separated. Up to 20."
+  },
+  "tagsCount": {
+    "message": "{0} / 20 tags"
+  },
+  "descriptionsAdded": {
+    "message": "{0} descriptions added."
+  },
+  "tagsSuggested": {
+    "message": "{0} tags ready."
+  },
+  "priceRounded": {
+    "message": "Facebook doesn't accept cents: it will be posted as {0}."
+  },
+  "needsLogin": {
+    "message": "Log in to Facebook and press Publish again."
+  },
+  "formTimeout": {
+    "message": "The Marketplace form took too long to load. Please try again."
+  },
+  "noTemplate": {
+    "message": "The template no longer exists."
   }
 }

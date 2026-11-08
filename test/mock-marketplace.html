@@ -14,8 +14,17 @@
   <div role="button" aria-expanded="false" id="more"><span>Más detalles</span></div>
   <div id="moreBox" hidden>
     <label><div><span>Descripción</span><textarea id="desc"></textarea></div></label>
+    <label id="availLabel"><div role="combobox" tabindex="0"><span>Disponibilidad</span><span id="availValue">Publicar como artículo único</span></div></label>
+    <label><div><span>Etiquetas de productos</span><textarea id="tags"></textarea></div></label>
+    <div id="chips"></div>
+    <label><div><span>SKU</span><input type="text" id="sku"></div></label>
   </div>
   <label><div><span>Ubicación</span><input type="text" id="loc" role="combobox"></div></label>
+  <div class="opt"><div><span>Encuentro en un lugar público</span><span>El encuentro se realiza…</span></div><div role="checkbox" aria-checked="false" id="dl1" tabindex="0"></div></div>
+  <div class="opt"><div><span>Retiro en la puerta</span></div><div role="checkbox" aria-checked="true" id="dl2" tabindex="0"></div></div>
+  <div class="opt"><div><span>Entrega en la puerta</span></div><div role="checkbox" aria-checked="false" id="dl3" tabindex="0"></div></div>
+  <div class="opt"><div><span>Promocionar tras publicar</span><span>Agrega un paso…</span></div><div role="switch" aria-checked="true" id="promo" tabindex="0"></div></div>
+  <div class="opt"><div><span>Ocultar a amigos</span></div><input type="checkbox" id="hide"></div>
   <div role="button" aria-label="Publicar" id="publish"><span>Publicar</span></div>
   <div id="published">no</div>
 </div>
@@ -36,6 +45,9 @@
   document.querySelector('#condLabel [role=combobox]').onclick = () => openList(['Nuevo','Usado: como nuevo','Usado: buen estado','Usado: aceptable'], v => { document.getElementById('condValue').textContent = v; state.cond = v; });
   document.getElementById('more').onclick = (e) => { document.getElementById('moreBox').hidden = false; e.currentTarget.setAttribute('aria-expanded','true'); };
   document.getElementById('loc').addEventListener('input', e => openList(['Quito, Ecuador','Quito Norte, Ecuador'], v => { e.target.value = v; state.locPicked = v; }));
+  document.querySelectorAll('[role=checkbox],[role=switch]').forEach(c => c.onclick = () => c.setAttribute('aria-checked', c.getAttribute('aria-checked') === 'true' ? 'false' : 'true'));
+  document.querySelector('#availLabel [role=combobox]').onclick = () => openList(['Publicar como artículo único','Publicar como disponible'], v => { document.getElementById('availValue').textContent = v; });
+  document.getElementById('tags').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); const c = document.createElement('span'); c.className='chip'; c.textContent = e.target.value; document.getElementById('chips').appendChild(c); e.target.value=''; } });
   document.getElementById('publish').onclick = () => { document.getElementById('published').textContent = 'yes'; };
   window.__state = state;
 </script>

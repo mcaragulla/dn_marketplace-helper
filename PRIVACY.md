@@ -1,6 +1,6 @@
 # Política de privacidad — DN Marketplace Helper
 
-*Última actualización: 8 de noviembre de 2026*
+*Última actualización: 8 de noviembre de 2026 (v1.1.0)*
 
 ## Español
 
@@ -9,7 +9,7 @@
 - **Datos que guarda:** plantillas, fotos, historial de publicaciones y ajustes que tú creas.
 - **Dónde se guardan:** solo en tu navegador (`chrome.storage.local` e IndexedDB). No existe servidor de la extensión.
 - **Envío de datos:** ninguno. La extensión no hace solicitudes a servidores externos ni usa analítica.
-- **Acceso a Facebook:** la extensión lee y escribe únicamente en el formulario de Marketplace abierto, y solo cuando tú presionas *Rellenar* o *Guardar formulario como plantilla*. Detecta el clic en *Publicar* para marcar el título y las fotos como usados.
+- **Acceso a Facebook:** la extensión lee y escribe únicamente en el formulario de Marketplace abierto, y solo cuando tú presionas *Publicar* (abre Marketplace en una pestaña nueva), *Rellenar esta página* o *Guardar formulario como plantilla*. Detecta el clic en *Publicar* para marcar el título y las fotos como usados.
 - **Permisos:** `storage` y `unlimitedStorage` (guardar tus datos y fotos), `alarms` y `notifications` (recordatorios), `activeTab` y `scripting` (rellenar la pestaña de Facebook que tienes abierta).
 - **Borrar tus datos:** desinstala la extensión o borra el historial y las plantillas desde el panel.
 

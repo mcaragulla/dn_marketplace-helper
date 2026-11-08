@@ -1,5 +1,6 @@
 import { load, save, update, newTemplate, ymd, defaultData } from '../lib/store.js';
-import { stats, nextPost, dayStatus } from '../lib/engine.js';
+import { stats, nextPost, dayStatus, hasCents, roundPrice, parseTags } from '../lib/engine.js';
+import { suggestTags, suggestDescriptions } from '../lib/suggest.js';
 import { putImage, putImageRecord, getImage, getAllImages, deleteImage, clearImages, blobToDataUrl, dataUrlToBlob, uid } from '../lib/db.js';
 import { initI18n, applyI18n, t, lang } from '../lib/i18n.js';
 
@@ -16,6 +17,11 @@ const CATEGORIES = {
     'Baby & Kids', 'Toys & Games', 'Electronics & Computers', 'Mobile Phones', 'Bicycles', 'Arts & Crafts',
     'Sports & Outdoors', 'Auto Parts', 'Musical Instruments', 'Antiques & Collectibles', 'Miscellaneous']
 };
+const AVAILABILITY = {
+  es: ['Publicar como disponible', 'Publicar como artículo único'],
+  en: ['List as in stock', 'List as single item']
+};
+const PUBLISH_ICON = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3h16l1.6 5.2A3 3 0 0 1 19 12v8a1 1 0 0 1-1 1h-4v-5h-4v5H6a1 1 0 0 1-1-1v-8a3 3 0 0 1-2.6-3.8L4 3Zm1.5 2-1.1 3.7a1 1 0 0 0 1 1.3c.6 0 1.1-.4 1.2-1L7 5H5.5Zm3.6 0-.4 4a1.3 1.3 0 0 0 2.6.1V5H9.1Zm4 0v4.1a1.3 1.3 0 0 0 2.6-.1l-.4-4h-2.2Zm4.3 0 .4 4c.1.6.6 1 1.2 1a1 1 0 0 0 1-1.3L18.5 5h-1.1Z"/></svg>';
 const CONDITIONS = {
   es: ['Nuevo', 'Usado - Como nuevo', 'Usado - Buen estado', 'Usado - Aceptable'],
   en: ['New', 'Used - Like New', 'Used - Good', 'Used - Fair']
@@ -81,6 +87,7 @@ function fillDatalists() {
   const l = lang();
   $('categoriesList').replaceChildren(...CATEGORIES[l].map((c) => el('option', { value: c })));
   $('conditionsList').replaceChildren(...CONDITIONS[l].map((c) => el('option', { value: c })));
+  $('availabilityList').replaceChildren(...AVAILABILITY[l].map((c) => el('option', { value: c })));
 }
 
 /** Borra imágenes que ya no usa ninguna plantilla. */
@@ -145,14 +152,31 @@ async function renderTemplates() {
         el('span', { class: 'badge ' + left }, t('postsLeft', s.postsLeft))),
       el('h3', {}, tpl.name || t('untitled')),
       el('div', { class: 'muted' }, t('statsLine', s.freeTitles.length, s.totalTitles, s.freeImages.length, s.totalImages)),
+      publishButton(tpl.id, 'primary publish'),
       el('div', { class: 'row' },
-        el('button', { class: 'small primary', onclick: () => { location.hash = 'edit=' + tpl.id; } }, t('edit')),
+        el('button', { class: 'small', onclick: () => { location.hash = 'edit=' + tpl.id; } }, t('edit')),
         el('button', { class: 'small', onclick: () => duplicate(tpl.id) }, t('duplicate')),
         el('span', { class: 'spacer' }),
         el('button', { class: 'small danger', onclick: () => removeTemplate(tpl.id) }, t('delete')))
     ));
   }
   $('tplList').replaceChildren(...cards);
+}
+
+function publishButton(id, cls) {
+  const b = el('button', { class: cls, onclick: () => publish(id) });
+  b.innerHTML = PUBLISH_ICON;
+  b.append(el('span', {}, t('publish')));
+  return b;
+}
+
+async function publish(id) {
+  data = await load();
+  const tpl = data.templates.find((x) => x.id === id);
+  if (!tpl) return;
+  const np = nextPost(tpl, data.history);
+  if (np.error) { toast(t(np.error)); return; }
+  await chrome.runtime.sendMessage({ type: 'dnmh:publish', templateId: id });
 }
 
 $('newTpl').onclick = async () => {
@@ -206,6 +230,18 @@ function openEditor(tpl) {
   $('e_titles').value = (draft.titles || []).join('\n');
   $('e_descriptions').value = (draft.descriptions || []).join('\n---\n');
   $('e_variables').value = draft.variables || '';
+  $('e_availability').value = draft.availability || '';
+  $('e_sku').value = draft.sku || '';
+  $('e_tags').value = draft.tags || '';
+  const dl = Object.assign({ publicMeetup: true, doorPickup: false, doorDropoff: false }, draft.delivery || {});
+  $('e_dl_meetup').checked = dl.publicMeetup;
+  $('e_dl_pickup').checked = dl.doorPickup;
+  $('e_dl_dropoff').checked = dl.doorDropoff;
+  $('e_hide').checked = !!draft.hideFromFriends;
+  $('e_benefits').value = draft.benefits || '';
+  $('e_features').value = draft.features || '';
+  $('e_deliveryInfo').value = draft.deliveryInfo || '';
+  $('e_emojis').checked = draft.emojis !== false;
   $('clientsList').replaceChildren(...[...new Set(data.templates.map((x) => x.client).filter(Boolean))].map((c) => el('option', { value: c })));
   $('savedHint').classList.add('hidden');
   renderEditorSide();
@@ -224,6 +260,15 @@ function readEditor() {
     titles: splitLines($('e_titles').value),
     descriptions: splitBlocks($('e_descriptions').value),
     variables: $('e_variables').value,
+    availability: $('e_availability').value.trim(),
+    sku: $('e_sku').value.trim(),
+    tags: $('e_tags').value,
+    delivery: { publicMeetup: $('e_dl_meetup').checked, doorPickup: $('e_dl_pickup').checked, doorDropoff: $('e_dl_dropoff').checked },
+    hideFromFriends: $('e_hide').checked,
+    benefits: $('e_benefits').value,
+    features: $('e_features').value,
+    deliveryInfo: $('e_deliveryInfo').value.trim(),
+    emojis: $('e_emojis').checked,
     updatedAt: Date.now()
   });
 }
@@ -248,8 +293,27 @@ function bindEditor() {
     clearTimeout(timer);
     timer = setTimeout(async () => { await saveDraft(false); renderEditorSide(); }, 600);
   };
-  ['e_name', 'e_client', 'e_price', 'e_per', 'e_category', 'e_condition', 'e_location', 'e_titles', 'e_descriptions', 'e_variables']
-    .forEach((id) => $(id).addEventListener('input', auto));
+  ['e_name', 'e_client', 'e_price', 'e_per', 'e_category', 'e_condition', 'e_location', 'e_titles', 'e_descriptions', 'e_variables',
+    'e_availability', 'e_sku', 'e_tags', 'e_dl_meetup', 'e_dl_pickup', 'e_dl_dropoff', 'e_hide', 'e_benefits', 'e_features', 'e_deliveryInfo', 'e_emojis']
+    .forEach((id) => $(id).addEventListener(['checkbox'].includes($(id).type) ? 'change' : 'input', auto));
+  $('publishTpl').onclick = async () => { await saveDraft(false); publish(draft.id); };
+  $('suggestDesc').onclick = async () => {
+    readEditor();
+    const list = suggestDescriptions(draft, lang(), 3);
+    const cur = $('e_descriptions').value.trim();
+    $('e_descriptions').value = (cur ? cur + '\n---\n' : '') + list.join('\n---\n');
+    await saveDraft(false);
+    renderEditorSide();
+    toast(t('descriptionsAdded', list.length));
+  };
+  $('suggestTags').onclick = async () => {
+    readEditor();
+    const tags = suggestTags(draft, parseTags(draft.tags));
+    $('e_tags').value = tags.join(', ');
+    await saveDraft(false);
+    renderEditorSide();
+    toast(t('tagsSuggested', tags.length));
+  };
   $('saveTpl').onclick = async () => { await saveDraft(true); renderEditorSide(); };
   $('backBtn').onclick = async () => { await saveDraft(false); location.hash = 'templates'; };
   $('dupTpl').onclick = async () => { await saveDraft(false); duplicate(draft.id); };
@@ -269,6 +333,10 @@ function renderEditorSide() {
   if (!draft) return;
   readEditor();
   const s = stats(draft, data.history);
+  const warn = $('priceWarn');
+  warn.classList.toggle('hidden', !hasCents(draft.price));
+  warn.textContent = t('priceRounded', roundPrice(draft.price));
+  $('tagsCount').textContent = t('tagsCount', parseTags(draft.tags).length);
   const rows = [
     [t('availableTitles'), `${s.freeTitles.length} / ${s.totalTitles}`],
     [t('availablePhotos'), `${s.freeImages.length} / ${s.totalImages}`],

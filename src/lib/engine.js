@@ -121,12 +121,44 @@ export function nextPost(tpl, history) {
     title: s.freeTitles[0],
     description: buildDescription(tpl, publishedCount),
     imageIds: s.freeImages.slice(0, s.per),
-    price: String(tpl.price || '').replace(/[^\d.,]/g, ''),
+    price: roundPrice(tpl.price),
     category: tpl.category || '',
     condition: tpl.condition || '',
     location: tpl.location || '',
+    availability: tpl.availability || '',
+    tags: parseTags(tpl.tags),
+    sku: tpl.sku || '',
+    delivery: Object.assign({ publicMeetup: true, doorPickup: false, doorDropoff: false }, tpl.delivery || {}),
+    hideFromFriends: !!tpl.hideFromFriends,
     lowStock: s.postsLeft <= 3
   };
+}
+
+/** Facebook no acepta centavos: "16.99" → "17". Vacío si no hay número. */
+export function roundPrice(value) {
+  const clean = String(value || '').replace(/[^\d.,]/g, '');
+  if (!clean) return '';
+  // El último separador (punto o coma) se toma como decimal: "16.99", "16,99", "1.200,50".
+  const lastSep = Math.max(clean.lastIndexOf('.'), clean.lastIndexOf(','));
+  const num = lastSep === -1
+    ? Number(clean)
+    : Number(`${clean.slice(0, lastSep).replace(/[.,]/g, '') || '0'}.${clean.slice(lastSep + 1)}`);
+  return Number.isFinite(num) ? String(Math.round(num)) : '';
+}
+
+export function hasCents(value) {
+  return /[.,]\d+\s*$/.test(String(value || '').trim()) && !/[.,]0+\s*$/.test(String(value || '').trim());
+}
+
+/** Etiquetas separadas por coma o salto de línea, sin duplicados, máximo 20. */
+export function parseTags(text) {
+  const seen = new Set();
+  const out = [];
+  String(text || '').split(/[,\n]/).map((x) => x.trim()).filter(Boolean).forEach((tag) => {
+    const k = normalize(tag);
+    if (!seen.has(k) && out.length < 20) { seen.add(k); out.push(tag); }
+  });
+  return out;
 }
 
 /* ---------- Calendario ---------- */

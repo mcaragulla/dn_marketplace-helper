@@ -52,13 +52,13 @@ export function clearImages() {
   return tx('readwrite', (s) => s.clear());
 }
 
-export function blobToDataUrl(blob) {
-  return new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(r.result);
-    r.onerror = () => reject(r.error);
-    r.readAsDataURL(blob);
-  });
+/** Funciona también en el service worker (sin FileReader). */
+export async function blobToDataUrl(blob) {
+  const bytes = new Uint8Array(await blob.arrayBuffer());
+  let bin = '';
+  const CHUNK = 0x8000;
+  for (let i = 0; i < bytes.length; i += CHUNK) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+  return `data:${blob.type || 'application/octet-stream'};base64,${btoa(bin)}`;
 }
 
 export async function dataUrlToBlob(dataUrl) {
